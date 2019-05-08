@@ -1,9 +1,9 @@
 import random as rd
  
-divergence_angle1 = 137.50
-divergence_angle2 = 137.50
+divergence_angle1 = 137.5
+divergence_angle2 = 137.5
 branching_angle = 18.95
-elongation_rate = 1.120
+elongation_rate = 1.1
 width_increase = 1.5
 leaf_maturation = 30
  
@@ -22,18 +22,20 @@ def leaf_size(max_leaf_size, t):
 def ran():
   return rd.randint(2, 2)
 def ran_l():
-  return rd.randint(20,50)
+  return rd.randint(30,50)
+def ran_a():
+  return rd.randint(15,45)
  
 derivation length: 8
 production:
 
 A(t, random):
     if t == 0 or random == 3:
-      produce /!(width_increase)F(ran_l())[&(branching_angle)F(ran_l())A(t+1, ran())]/(divergence_angle1)[&(branching_angle)F(ran_l())A(t+1, ran())]/(divergence_angle2)[&(branching_angle)F(ran_l())A(t+1, ran())]
+      produce !(width_increase)F(ran_l())[&(ran_a())F(ran_l())A(t+1, ran())]/(divergence_angle1)[&(branching_angle)F(ran_l())A(t+1, ran())]/(divergence_angle2)[&(branching_angle)F(ran_l())A(t+1, ran())]
     elif random == 1:
-      produce /!(width_increase)F(ran_l())[&(branching_angle)F(ran_l())A(t+1, ran())]/(divergence_angle1)
+      produce !(width_increase)F(ran_l())[&(ran_a())F(ran_l())A(t+1, ran())]/(divergence_angle1)[&(ran_a())F(ran_l())A(t+1, ran())]/(divergence_angle2)   
     elif random == 2:
-      produce !(width_increase)F(ran_l())[&(branching_angle)F(ran_l())A(t+1, ran())]/(divergence_angle1)[&(branching_angle)F(ran_l())A(t+1, ran())]/(divergence_angle2)      
+      produce !(width_increase)F(ran_l())[&(ran_a())F(ran_l())A(t+1, ran())]/(divergence_angle1)[&(ran_a())F(ran_l())A(t+1, ran())]/(divergence_angle2)      
  
 F(l) --> F(l*elongation_rate)
 !(w) --> !(w*width_increase)
