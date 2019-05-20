@@ -1,0 +1,47 @@
+trunk_start_size = 1
+trunk_step_size = 1
+trunk_max_size = 20
+trunk_width_multiplier = 0.05
+trunk_height_multiplier = 0.1
+
+leaves_start_size = 1
+leaves_step_size = 1
+leaves_max_size = 50
+leaves_width_multiplier = 0.005
+leaves_height_multiplier = 0.1
+
+palm_curve_degree = 2
+
+Axiom: T(trunk_start_size) L(leaves_start_size)
+
+derivation length: 40
+production:
+# Trunk
+T(size):
+  # Check if max size reached
+  if (size + trunk_step_size < trunk_max_size):
+    if (size == trunk_max_size / 5):
+      produce T(size + trunk_step_size)-(palm_curve_degree) T(trunk_start_size)
+    else:
+      produce T(size + trunk_step_size)
+  else:
+    produce T(size)
+
+# Leaves
+L(size):
+  # Check if max size reached
+  if (size + leaves_step_size < leaves_max_size):
+    produce L(size + leaves_step_size)
+  else:
+    produce L(size)
+interpretation:
+T(size) --> !(size * trunk_width_multiplier)F(size * trunk_height_multiplier)
+L(size) --> SetColor(2)!(size * leaves_width_multiplier)+(90)[F(size * leaves_height_multiplier)]^[F(size * leaves_height_multiplier)]^[F(size * leaves_height_multiplier)]^[F(size * leaves_height_multiplier)]^[F(size * leaves_height_multiplier)]^[F(size * leaves_height_multiplier)]
+
+endlsystem
+###### INITIALISATION ######
+
+__lpy_code_version__ = 1.1
+
+def __initialiseContext__(context):
+	context.animation_timestep = 0.1
