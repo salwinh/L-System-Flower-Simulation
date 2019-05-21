@@ -97,17 +97,17 @@ Leaf(s):
   # Lol, it seems like list comprehension doesn't work here
   endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
   if s < 60:
-    produce ;(1)Sweep(nerve, section, length, dl, 0.5, x)
+    produce ;(1)Sweep(path, section_2, length, dl, 0.5, leafwidth)
   elif 60 <= s <= 160:
     for e in range(len(endpoints) - 2):
       if endpoints[e] <= s < endpoints[e+1]:
-        produce ;(e+1)Sweep(nerve, section, length, dl, 0.5, x)
+        produce ;(e+1)Sweep(path, section_2, length, dl, 0.5, leafwidth)
   elif 160 < s <= 165:
-    produce ;(22)Sweep(nerve, section, length, dl, 0.5, x)
+    produce ;(22)Sweep(path, section_2, length, dl, 0.5, leafwidth)
   elif 165 < s <= 170:
-    produce ;(23)Sweep(nerve, section, length, dl, 0.3, x)
+    produce ;(23)Sweep(path, section_2, length, dl, 0.3, leafwidth)
   elif 170 < s <= 175:
-    produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
+    produce ;(24)Sweep(path, section_2, length, dl, 0.2, leafwidth)
   elif s >= 350:
     produce ;(41)@O(s / 4000)
   else:
