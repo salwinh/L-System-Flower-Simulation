@@ -64,7 +64,7 @@ C(x,k) :
         if k <= 9:
             produce F(1,0.05+0.25/k)A(k+1)
         else: # outer branch divided in 4 parts
-            produce F(outer_branch_length()/4,0.04+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())k(5)]F(outer_branch_length()/4,0.03+0.20/k)[-(random_leaf_angle())&(random_leaf_pitch())k(5)]F(outer_branch_length()/4,0.02+0.15/k)[+(random_leaf_angle())&(random_leaf_angle())k(5)]F(outer_branch_length()/4,0.01+0.10/k)[-(random_leaf_angle())&(random_leaf_pitch())k(5)]
+            produce F(outer_branch_length()/4,0.04+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(5)]F(outer_branch_length()/4,0.03+0.20/k)[-(random_leaf_angle())&(random_leaf_pitch())Leaf(5)]F(outer_branch_length()/4,0.02+0.15/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(5)]F(outer_branch_length()/4,0.01+0.10/k)[-(random_leaf_angle())&(random_leaf_pitch())Leaf(5)]
             
     else:
         produce C(x+step,k)
@@ -73,7 +73,7 @@ C(x,k) :
 Leaf(s):
   if (s == 175):
     # This adds some randomness to disappearing of leafs
-    rnd = random.random()
+    rnd = rd.random()
     if (rnd < 0.4):
       produce Leaf(s+1)
     else:

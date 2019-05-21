@@ -20,8 +20,16 @@ dl = 0.05
 # self-explanatory. We can even improve the proccess of growth of the trunk to make it more natural!
 maximum_trunk_height = 3
 
-def random_length():
-  return rd.uniform(0.75, 1.25)
+def outer_branch_length():
+  return rd.uniform(2.8, 3.2)
+def random_alpha():
+  return rd.randint(27, 33)
+def random_beta():
+  return rd.randint(17, 23)
+def random_leaf_angle():
+  return rd.randint(-125,-125)
+def random_leaf_pitch():
+  return rd.randint(250,250)
 
 # We start with 0.3 thickness and A (1.0)
 Axiom: _(0.3)A(1.0)
@@ -44,7 +52,7 @@ A(k) :
       else: # elif r <= p1:
           produce /(phi)[+(random_alpha())C(0.1,k)Leaf(k)]-(random_beta())C(step,k)
       #else:
-      #    produce /(phi)[+(alpha)C(0.1, k);k(k)]-(beta)C(0.1,k)
+      #    produce /(phi)[+(random_alpha())C(0.1, k);k(k)]-(random_beta())C(0.1,k)
     else:
       # Just a dummy production to make sure that simulation doesn't stop, when nothing happens. Not sure, if it's needed - sometimes leaves didn't age properly without it, or maybe there was 
       # another mistake?
@@ -53,10 +61,11 @@ A(k) :
 # Whole module from random-tree. It produces some kind of branch with random thickness (?) and based on the iteration chooses whether it should produce more branches (A module?) or not.
 C(x,k) :
     if x >= 1:
-        if k < 19:
-            produce F(random_length(),0.05+0.25/k)A(k+1)
-        else:
-            produce F(0.25,0.05+0.25/k+2)F(0.25,0.05+0.25/k+4)F(0.25,0.05+0.25/k)F(0.25,0.05+0.25/k+6)
+        if k <= 9:
+            produce F(1,0.05+0.25/k)A(k+1)
+        else: # outer branch divided in 4 parts
+            produce F(outer_branch_length()/4,0.04+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(5)]F(outer_branch_length()/4,0.03+0.20/k)[-(random_leaf_angle())&(random_leaf_pitch())Leaf(5)]F(outer_branch_length()/4,0.02+0.15/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(5)]F(outer_branch_length()/4,0.01+0.10/k)[-(random_leaf_angle())&(random_leaf_pitch())Leaf(5)]
+            
     else:
         produce C(x+step,k)
 
@@ -64,7 +73,7 @@ C(x,k) :
 Leaf(s):
   if (s == 175):
     # This adds some randomness to disappearing of leafs
-    rnd = random.random()
+    rnd = rd.random()
     if (rnd < 0.4):
       produce Leaf(s+1)
     else:
