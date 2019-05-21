@@ -59,8 +59,15 @@ C(x,k) :
 
 # Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
 Leaf(s):
-  produce Leaf(s+1)
-    
+  if (s == 175):
+    # This adds some randomness to disappearing of leafs
+    rnd = random.random()
+    if (rnd < 0.4):
+      produce Leaf(s+1)
+    else:
+      produce Leaf(175)
+  else:
+    produce Leaf(s+1)
 
 homomorphism:
 
