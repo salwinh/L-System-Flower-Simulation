@@ -24,7 +24,7 @@ maximum_trunk_height = 3
 Axiom: _(0.3)A(1.0)
 
 # 360 was chosen by trial and errors method, not making much sense I guess
-derivation length: 360
+derivation length: 380
 production:
 A(k) :
     # pl - Probably some kind of probability. Check out random-tree example from examples/tutorials, l-py directory. I removed the random factor to make tree more symmetric.
@@ -59,7 +59,7 @@ C(x,k) :
 
 # Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
 k(s):
-  if (k > 150):
+  if (s > 150):
     # This adds some randomness to disappearing of leafs
     rnd = random.random()
     if (rnd < 0.4):

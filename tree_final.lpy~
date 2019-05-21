@@ -59,8 +59,16 @@ C(x,k) :
 
 # Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
 k(s):
-  produce k(s+0.5)
-    
+  if (k > 150):
+    # This adds some randomness to disappearing of leafs
+    rnd = random.random()
+    if (rnd < 0.4):
+      produce k(s+0.5)
+    else:
+      produce
+  else:
+    produce k(s+0.5)
+
 
 homomorphism:
 
@@ -82,17 +90,10 @@ k(s):
   elif s > 120 and s < 130:
     # red
     produce ;(3)Sweep(nerve, section, length, dl, 0.5, x)
-  elif s >= 130 and s < 150:
+  else:
     # orange
     produce ;(4)Sweep(nerve, section, length, dl, 0.5, x)
-  else:
-    # This adds some randomness to disappearing of leafs
-    rnd = random.random()
-    if (rnd > 0.3):
-      produce ;(4)Sweep(nerve, section, length, dl, 0.5, x)
-    else:
-      # die
-      produce
+
 ###### INITIALISATION ######
 
 __lpy_code_version__ = 1.1
