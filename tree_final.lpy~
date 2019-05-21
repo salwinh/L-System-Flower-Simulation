@@ -27,8 +27,8 @@ def random_length():
 Axiom: _(0.3)A(1.0)
 
 # 360 was chosen by trial and errors method, not making much sense I guess
-derivation length: 360
-production:  
+derivation length: 600
+production:
 A(k) :
     # pl - Probably some kind of probability. Check out random-tree example from examples/tutorials, l-py directory. I removed the random factor to make tree more symmetric.
     # Commented out lines are also from that example, just compare them
@@ -40,9 +40,9 @@ A(k) :
     if k <= 10:
       # If we haven't reached the maximum trunk height, we aren't producing any branches!
       if k <= maximum_trunk_height:
-          produce F(k+1)A(k+1)
+          produce SetColor(0)F(k+1)A(k+1)
       else: # elif r <= p1:
-          produce /(phi)[+(alpha)C(0.1,k);k(k)]-(beta)C(step,k)
+          produce /(phi)[+(random_alpha())C(0.1,k)Leaf(k)]-(random_beta())C(step,k)
       #else:
       #    produce /(phi)[+(alpha)C(0.1, k);k(k)]-(beta)C(0.1,k)
     else:
@@ -61,9 +61,16 @@ C(x,k) :
         produce C(x+step,k)
 
 # Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
-k(s):
-  produce k(s+0.5)
-    
+Leaf(s):
+  if (s == 175):
+    # This adds some randomness to disappearing of leafs
+    rnd = random.random()
+    if (rnd < 0.4):
+      produce Leaf(s+1)
+    else:
+      produce Leaf(175)
+  else:
+    produce Leaf(s+1)
 
 homomorphism:
 
@@ -77,25 +84,117 @@ C(x,k):
     produce F(x, d)
 
 # This is how the leaves are interpreted!
-k(s):
-  colors = [1, 3, 4]
-  if s <= 120:
-    # green
-    produce ;(2)Sweep(nerve, section_2, length, dl, 0.5, leafwidth)
-  elif s > 120 and s < 130:
-    # red
-    produce ;(3)Sweep(nerve, section_2, length, dl, 0.5, leafwidth)
-  elif s >= 130 and s < 150:
-    # orange
-    produce ;(4)Sweep(nerve, section_2, length, dl, 0.5, leafwidth)
+Leaf(s):
+  # Lol, it seems like list comprehension doesn't work here
+  endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
+  if s < 60:
+    produce ;(1)Sweep(nerve, section, length, dl, 0.5, x)
+  elif 60 <= s <= 160:
+    for e in range(len(endpoints) - 2):
+      if endpoints[e] <= s < endpoints[e+1]:
+        produce ;(e+1)Sweep(nerve, section, length, dl, 0.5, x)
+  elif 160 < s <= 165:
+    produce ;(22)Sweep(nerve, section, length, dl, 0.5, x)
+  elif 165 < s <= 170:
+    produce ;(23)Sweep(nerve, section, length, dl, 0.3, x)
+  elif 170 < s <= 175:
+    produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
+  elif s >= 350:
+    produce ;(41)@O(s / 4000)
   else:
-    # die!
     produce
+
+endlsystem
 ###### INITIALISATION ######
 
 __lpy_code_version__ = 1.1
 
 def __initialiseContext__(context):
+	import openalea.plantgl.all as pgl
+	Color_0 = pgl.Material("Color_0" , ambient = (48,39,12) , diffuse = 1.75 , )
+	Color_0.name = "Color_0"
+	context.turtle.setMaterial(0,Color_0)
+	Color_1 = pgl.Material("Color_1" , ambient = (30,60,10) , diffuse = 3 , )
+	Color_1.name = "Color_1"
+	context.turtle.setMaterial(1,Color_1)
+	Color_2 = pgl.Material("Color_2" , ambient = (43,69,13) , diffuse = 2.76654 , )
+	Color_2.name = "Color_2"
+	context.turtle.setMaterial(2,Color_2)
+	Color_3 = pgl.Material("Color_3" , ambient = (56,79,16) , diffuse = 2.53309 , )
+	Color_3.name = "Color_3"
+	context.turtle.setMaterial(3,Color_3)
+	Color_4 = pgl.Material("Color_4" , ambient = (69,88,19) , diffuse = 2.29963 , )
+	Color_4.name = "Color_4"
+	context.turtle.setMaterial(4,Color_4)
+	Color_5 = pgl.Material("Color_5" , ambient = (83,98,22) , diffuse = 2.06618 , )
+	Color_5.name = "Color_5"
+	context.turtle.setMaterial(5,Color_5)
+	Color_6 = pgl.Material("Color_6" , ambient = (96,107,25) , diffuse = 1.83272 , )
+	Color_6.name = "Color_6"
+	context.turtle.setMaterial(6,Color_6)
+	Color_7 = pgl.Material("Color_7" , ambient = (109,117,28) , diffuse = 1.59926 , )
+	Color_7.name = "Color_7"
+	context.turtle.setMaterial(7,Color_7)
+	Color_8 = pgl.Material("Color_8" , ambient = (122,126,31) , diffuse = 1.36581 , )
+	Color_8.name = "Color_8"
+	context.turtle.setMaterial(8,Color_8)
+	Color_9 = pgl.Material("Color_9" , ambient = (153,153,37) , diffuse = 1.00654 , )
+	Color_9.name = "Color_9"
+	context.turtle.setMaterial(9,Color_9)
+	Color_10 = pgl.Material("Color_10" , ambient = (125,116,29) , diffuse = 1.39916 , )
+	Color_10.name = "Color_10"
+	context.turtle.setMaterial(10,Color_10)
+	Color_11 = pgl.Material("Color_11" , ambient = (114,97,24) , diffuse = 1.66597 , )
+	Color_11.name = "Color_11"
+	context.turtle.setMaterial(11,Color_11)
+	Color_12 = pgl.Material("Color_12" , ambient = (103,77,19) , diffuse = 1.93277 , )
+	Color_12.name = "Color_12"
+	context.turtle.setMaterial(12,Color_12)
+	Color_13 = pgl.Material("Color_13" , ambient = (92,58,14) , diffuse = 2.19958 , )
+	Color_13.name = "Color_13"
+	context.turtle.setMaterial(13,Color_13)
+	Color_14 = pgl.Material("Color_14" , ambient = (81,38,9) , diffuse = 2.46639 , )
+	Color_14.name = "Color_14"
+	context.turtle.setMaterial(14,Color_14)
+	Color_15 = pgl.Material("Color_15" , ambient = (70,19,4) , diffuse = 2.73319 , )
+	Color_15.name = "Color_15"
+	context.turtle.setMaterial(15,Color_15)
+	Color_16 = pgl.Material("Color_16" , ambient = (74,40,2) , diffuse = 2.5126 , )
+	Color_16.name = "Color_16"
+	context.turtle.setMaterial(16,Color_16)
+	Color_17 = pgl.Material("Color_17" , ambient = (79,62,1) , diffuse = 2.29202 , )
+	Color_17.name = "Color_17"
+	context.turtle.setMaterial(17,Color_17)
+	Color_18 = pgl.Material("Color_18" , ambient = (84,84,0) , diffuse = 2.07143 , )
+	Color_18.name = "Color_18"
+	context.turtle.setMaterial(18,Color_18)
+	Color_19 = pgl.Material("Color_19" , ambient = (80,77,6) , diffuse = 2.16291 , )
+	Color_19.name = "Color_19"
+	context.turtle.setMaterial(19,Color_19)
+	Color_20 = pgl.Material("Color_20" , ambient = (76,71,12) , diffuse = 2.2544 , )
+	Color_20.name = "Color_20"
+	context.turtle.setMaterial(20,Color_20)
+	Color_21 = pgl.Material("Color_21" , ambient = (72,65,19) , diffuse = 2.34588 , )
+	Color_21.name = "Color_21"
+	context.turtle.setMaterial(21,Color_21)
+	Color_22 = pgl.Material("Color_22" , ambient = (68,59,25) , diffuse = 2.43737 , )
+	Color_22.name = "Color_22"
+	context.turtle.setMaterial(22,Color_22)
+	Color_23 = pgl.Material("Color_23" , ambient = (64,53,32) , diffuse = 2.52885 , )
+	Color_23.name = "Color_23"
+	context.turtle.setMaterial(23,Color_23)
+	Color_24 = pgl.Material("Color_24" , ambient = (65,61,37) , diffuse = 2.46154 , )
+	Color_24.name = "Color_24"
+	context.turtle.setMaterial(24,Color_24)
+	Color_40 = pgl.Material("Color_40" , ambient = (54,9,1) , diffuse = 3.07415 , )
+	Color_40.name = "Color_40"
+	context.turtle.setMaterial(40,Color_40)
+	Color_41 = pgl.Material("Color_41" , ambient = (219,94,227) , diffuse = 0.60793 , )
+	Color_41.name = "Color_41"
+	context.turtle.setMaterial(41,Color_41)
+	Color_42 = pgl.Material("Color_42" , ambient = (30,60,10) , diffuse = 3 , )
+	Color_42.name = "Color_42"
+	context.turtle.setMaterial(42,Color_42)
 	import openalea.plantgl.all as pgl
 	x = pgl.NurbsCurve2D(	
 	    ctrlPointList = pgl.Point3Array([(0, 0.0551126, 1),(0.389171, 1.43562, 1),(0.666667, 0, 1),(1, 0.130266, 1)]) , 
