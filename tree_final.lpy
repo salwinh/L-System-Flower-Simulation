@@ -37,7 +37,7 @@ A(k) :
     if k <= 10:
       # If we haven't reached the maximum trunk height, we aren't producing any branches!
       if k <= maximum_trunk_height:
-          produce F(k+1)A(k+1)
+          produce SetColor(10)F(k+1)A(k+1)
       else: # elif r <= p1:
           produce /(phi)[+(alpha)C(0.1,k);k(k)]-(beta)C(step,k)
       #else:
@@ -51,9 +51,9 @@ A(k) :
 C(x,k) :
     if x >= 1:
         if k < 19:
-            produce F(1,0.05+0.25/k)A(k+1)
+            produce SetColor(10)F(1,0.05+0.25/k)A(k+1)
         else:
-            produce F(1,0.05+0.25/k)
+            produce SetColor(10)F(1,0.05+0.25/k)
     else:
         produce C(x+step,k)
 
@@ -88,11 +88,63 @@ k(s):
   else:
     # die!
     produce
+endlsystem
+
+print('elo!')
 ###### INITIALISATION ######
 
 __lpy_code_version__ = 1.1
 
 def __initialiseContext__(context):
+	import openalea.plantgl.all as pgl
+	Color_0 = pgl.Material("Color_0" , ambient = (30,60,10) , diffuse = 3 , )
+	Color_0.name = "Color_0"
+	context.turtle.setMaterial(0,Color_0)
+	Color_1 = pgl.Material("Color_1" , ambient = (32,55,9) , diffuse = 3.00741 , )
+	Color_1.name = "Color_1"
+	context.turtle.setMaterial(1,Color_1)
+	Color_2 = pgl.Material("Color_2" , ambient = (34,49,8) , diffuse = 3.01483 , )
+	Color_2.name = "Color_2"
+	context.turtle.setMaterial(2,Color_2)
+	Color_3 = pgl.Material("Color_3" , ambient = (37,45,7) , diffuse = 3.02224 , )
+	Color_3.name = "Color_3"
+	context.turtle.setMaterial(3,Color_3)
+	Color_4 = pgl.Material("Color_4" , ambient = (39,40,6) , diffuse = 3.02966 , )
+	Color_4.name = "Color_4"
+	context.turtle.setMaterial(4,Color_4)
+	Color_5 = pgl.Material("Color_5" , ambient = (42,35,5) , diffuse = 3.03707 , )
+	Color_5.name = "Color_5"
+	context.turtle.setMaterial(5,Color_5)
+	Color_6 = pgl.Material("Color_6" , ambient = (44,29,5) , diffuse = 3.04449 , )
+	Color_6.name = "Color_6"
+	context.turtle.setMaterial(6,Color_6)
+	Color_7 = pgl.Material("Color_7" , ambient = (47,24,4) , diffuse = 3.0519 , )
+	Color_7.name = "Color_7"
+	context.turtle.setMaterial(7,Color_7)
+	Color_8 = pgl.Material("Color_8" , ambient = (49,19,3) , diffuse = 3.05932 , )
+	Color_8.name = "Color_8"
+	context.turtle.setMaterial(8,Color_8)
+	Color_9 = pgl.Material("Color_9" , ambient = (52,14,2) , diffuse = 3.06673 , )
+	Color_9.name = "Color_9"
+	context.turtle.setMaterial(9,Color_9)
+	Color_10 = pgl.Material("Color_10" , ambient = (54,9,1) , diffuse = 3.07415 , )
+	Color_10.name = "Color_10"
+	context.turtle.setMaterial(10,Color_10)
+	Color_11 = pgl.Material("Color_11" , ambient = (57,5,1) , diffuse = 3.08156 , )
+	Color_11.name = "Color_11"
+	context.turtle.setMaterial(11,Color_11)
+	Color_12 = pgl.Material("Color_12" , ambient = (53,15,4) , diffuse = 3.24468 , )
+	Color_12.name = "Color_12"
+	context.turtle.setMaterial(12,Color_12)
+	Color_13 = pgl.Material("Color_13" , ambient = (49,26,8) , diffuse = 3.4078 , )
+	Color_13.name = "Color_13"
+	context.turtle.setMaterial(13,Color_13)
+	Color_20 = pgl.Material("Color_20" , ambient = (47,32,10) , diffuse = 3.48936 , )
+	Color_20.name = "Color_20"
+	context.turtle.setMaterial(20,Color_20)
+	Color_21 = pgl.Material("Color_21" , ambient = (49,26,8) , diffuse = 3.4078 , )
+	Color_21.name = "Color_21"
+	context.turtle.setMaterial(21,Color_21)
 	import openalea.plantgl.all as pgl
 	x = pgl.NurbsCurve2D(	
 	    ctrlPointList = pgl.Point3Array([(0, 0.0551126, 1),(0.389171, 1.43562, 1),(0.666667, 0, 1),(1, 0.130266, 1)]) , 
