@@ -24,7 +24,7 @@ maximum_trunk_height = 3
 Axiom: _(0.3)A(1.0)
 
 # 360 was chosen by trial and errors method, not making much sense I guess
-derivation length: 400
+derivation length: 380
 production:
 A(k) :
     # pl - Probably some kind of probability. Check out random-tree example from examples/tutorials, l-py directory. I removed the random factor to make tree more symmetric.
