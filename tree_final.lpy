@@ -75,36 +75,25 @@ C(x,k):
 
 # This is how the leaves are interpreted!
 k(s):
-  if s <= 60:
+  # Lol, it seems like list comprehension doesn't work here
+  endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
+  if s < 60:
     produce ;(1)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 60 < s <= 70:
-    produce ;(2)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 70 < s <= 80:
-    produce ;(3)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 80 < s <= 90:
-    produce ;(4)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 90 < s <= 100:
-    produce ;(5)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 100 < s <= 110:
-    produce ;(6)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 110 < s <= 120:
-    produce ;(7)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 120 < s <= 130:
-    produce ;(8)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 130 < s <= 140:
-    produce ;(9)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 140 < s <= 150:
-    produce ;(10)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 150 < s <= 160:
-    produce ;(11)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 160 < s <= 170:
-    produce ;(12)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 170 < s < 240:
-    produce ;(13)Sweep(nerve, section, length, dl, 0.5, x)
-  elif 240 <= s <= 270:
-    produce ;(14)Sweep(nerve, section, length, dl, 0.2, x)
+  elif 60 <= s <= 160:
+    for e in range(len(endpoints) - 2):
+      if endpoints[e] <= s < endpoints[e+1]:
+        print e+1
+        produce ;(e+3)Sweep(nerve, section, length, dl, 0.5, x)
+  elif 160 < s <= 165:
+    produce ;(22)Sweep(nerve, section, length, dl, 0.4, x)
+  elif 165 < s <= 170:
+    produce ;(23)Sweep(nerve, section, length, dl, 0.3, x)
+  elif 170 < s <= 175:
+    produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
   elif s >= 350:
-    produce ;(24)@O(s / 7000)
+    produce ;(41)@O(s / 4000)
+  else:
+    produce
 
 endlsystem
 ###### INITIALISATION ######
