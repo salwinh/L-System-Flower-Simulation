@@ -39,7 +39,7 @@ A(k) :
       if k <= maximum_trunk_height:
           produce SetColor(0)F(k+1)A(k+1)
       else: # elif r <= p1:
-          produce /(phi)[+(alpha)C(0.1,k)k(k)]-(beta)C(step,k)
+          produce /(phi)[+(alpha)C(0.1,k)Leaf(k)]-(beta)C(step,k)
       #else:
       #    produce /(phi)[+(alpha)C(0.1, k);k(k)]-(beta)C(0.1,k)
     else:
@@ -58,8 +58,8 @@ C(x,k) :
         produce C(x+step,k)
 
 # Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
-k(s):
-  produce k(s+1)
+Leaf(s):
+  produce Leaf(s+1)
     
 
 homomorphism:
@@ -74,7 +74,7 @@ C(x,k):
     produce F(x, d)
 
 # This is how the leaves are interpreted!
-k(s):
+Leaf(s):
   # Lol, it seems like list comprehension doesn't work here
   endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
   if s < 60:
@@ -150,25 +150,25 @@ def __initialiseContext__(context):
 	Color_15 = pgl.Material("Color_15" , ambient = (70,19,4) , diffuse = 2.73319 , )
 	Color_15.name = "Color_15"
 	context.turtle.setMaterial(15,Color_15)
-	Color_16 = pgl.Material("Color_16" , ambient = (60,0,0) , diffuse = 3 , )
+	Color_16 = pgl.Material("Color_16" , ambient = (74,40,2) , diffuse = 2.5126 , )
 	Color_16.name = "Color_16"
 	context.turtle.setMaterial(16,Color_16)
-	Color_17 = pgl.Material("Color_17" , ambient = (60,7,4) , diffuse = 2.93269 , )
+	Color_17 = pgl.Material("Color_17" , ambient = (79,62,1) , diffuse = 2.29202 , )
 	Color_17.name = "Color_17"
 	context.turtle.setMaterial(17,Color_17)
-	Color_18 = pgl.Material("Color_18" , ambient = (61,15,9) , diffuse = 2.86538 , )
+	Color_18 = pgl.Material("Color_18" , ambient = (84,84,0) , diffuse = 2.07143 , )
 	Color_18.name = "Color_18"
 	context.turtle.setMaterial(18,Color_18)
-	Color_19 = pgl.Material("Color_19" , ambient = (61,22,13) , diffuse = 2.79808 , )
+	Color_19 = pgl.Material("Color_19" , ambient = (80,77,6) , diffuse = 2.16291 , )
 	Color_19.name = "Color_19"
 	context.turtle.setMaterial(19,Color_19)
-	Color_20 = pgl.Material("Color_20" , ambient = (62,30,18) , diffuse = 2.73077 , )
+	Color_20 = pgl.Material("Color_20" , ambient = (76,71,12) , diffuse = 2.2544 , )
 	Color_20.name = "Color_20"
 	context.turtle.setMaterial(20,Color_20)
-	Color_21 = pgl.Material("Color_21" , ambient = (63,38,23) , diffuse = 2.66346 , )
+	Color_21 = pgl.Material("Color_21" , ambient = (72,65,19) , diffuse = 2.34588 , )
 	Color_21.name = "Color_21"
 	context.turtle.setMaterial(21,Color_21)
-	Color_22 = pgl.Material("Color_22" , ambient = (63,45,27) , diffuse = 2.59615 , )
+	Color_22 = pgl.Material("Color_22" , ambient = (68,59,25) , diffuse = 2.43737 , )
 	Color_22.name = "Color_22"
 	context.turtle.setMaterial(22,Color_22)
 	Color_23 = pgl.Material("Color_23" , ambient = (64,53,32) , diffuse = 2.52885 , )

@@ -39,7 +39,7 @@ A(k) :
       if k <= maximum_trunk_height:
           produce SetColor(0)F(k+1)A(k+1)
       else: # elif r <= p1:
-          produce /(phi)[+(alpha)C(0.1,k)k(k)]-(beta)C(step,k)
+          produce /(phi)[+(alpha)C(0.1,k)Leaf(k)]-(beta)C(step,k)
       #else:
       #    produce /(phi)[+(alpha)C(0.1, k);k(k)]-(beta)C(0.1,k)
     else:
@@ -58,8 +58,8 @@ C(x,k) :
         produce C(x+step,k)
 
 # Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
-k(s):
-  produce k(s+1)
+Leaf(s):
+  produce Leaf(s+1)
     
 
 homomorphism:
@@ -74,7 +74,7 @@ C(x,k):
     produce F(x, d)
 
 # This is how the leaves are interpreted!
-k(s):
+Leaf(s):
   # Lol, it seems like list comprehension doesn't work here
   endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
   if s < 60:
@@ -91,14 +91,11 @@ k(s):
   elif 170 < s <= 175:
     produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
   elif s >= 350:
-    produce ;(41)@O(s / 7000)
+    produce ;(41)@O(s / 4000)
   else:
     produce
 
 endlsystem
-#  elif 170 < s < 240:
-#    produce ;(13)Sweep(nerve, section, length, dl, 0.5, x)
-# elif 240 <= s <= 270:
 ###### INITIALISATION ######
 
 __lpy_code_version__ = 1.1
