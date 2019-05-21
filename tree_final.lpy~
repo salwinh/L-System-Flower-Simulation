@@ -85,11 +85,11 @@ Leaf(s):
         print e+1
         produce ;(e+3)Sweep(nerve, section, length, dl, 0.5, x)
   elif 160 < s <= 165:
-    produce ;(22)Sweep(nerve, section, length, dl, 0.4, x)
+    produce ;(22)Sweep(nerve, section, length, dl, 0.2, x)
   elif 165 < s <= 170:
-    produce ;(23)Sweep(nerve, section, length, dl, 0.3, x)
+    produce ;(23)Sweep(nerve, section, length, dl, 0.5, x)
   elif 170 < s <= 175:
-    produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
+    produce ;(24)Sweep(nerve, section, length, dl, 0.8, x)
   elif s >= 350:
     produce ;(41)@O(s / 4000)
   else:
@@ -150,25 +150,25 @@ def __initialiseContext__(context):
 	Color_15 = pgl.Material("Color_15" , ambient = (70,19,4) , diffuse = 2.73319 , )
 	Color_15.name = "Color_15"
 	context.turtle.setMaterial(15,Color_15)
-	Color_16 = pgl.Material("Color_16" , ambient = (60,0,0) , diffuse = 3 , )
+	Color_16 = pgl.Material("Color_16" , ambient = (74,40,2) , diffuse = 2.5126 , )
 	Color_16.name = "Color_16"
 	context.turtle.setMaterial(16,Color_16)
-	Color_17 = pgl.Material("Color_17" , ambient = (60,7,4) , diffuse = 2.93269 , )
+	Color_17 = pgl.Material("Color_17" , ambient = (79,62,1) , diffuse = 2.29202 , )
 	Color_17.name = "Color_17"
 	context.turtle.setMaterial(17,Color_17)
-	Color_18 = pgl.Material("Color_18" , ambient = (61,15,9) , diffuse = 2.86538 , )
+	Color_18 = pgl.Material("Color_18" , ambient = (84,84,0) , diffuse = 2.07143 , )
 	Color_18.name = "Color_18"
 	context.turtle.setMaterial(18,Color_18)
-	Color_19 = pgl.Material("Color_19" , ambient = (61,22,13) , diffuse = 2.79808 , )
+	Color_19 = pgl.Material("Color_19" , ambient = (80,77,6) , diffuse = 2.16291 , )
 	Color_19.name = "Color_19"
 	context.turtle.setMaterial(19,Color_19)
-	Color_20 = pgl.Material("Color_20" , ambient = (62,30,18) , diffuse = 2.73077 , )
+	Color_20 = pgl.Material("Color_20" , ambient = (76,71,12) , diffuse = 2.2544 , )
 	Color_20.name = "Color_20"
 	context.turtle.setMaterial(20,Color_20)
-	Color_21 = pgl.Material("Color_21" , ambient = (63,38,23) , diffuse = 2.66346 , )
+	Color_21 = pgl.Material("Color_21" , ambient = (72,65,19) , diffuse = 2.34588 , )
 	Color_21.name = "Color_21"
 	context.turtle.setMaterial(21,Color_21)
-	Color_22 = pgl.Material("Color_22" , ambient = (63,45,27) , diffuse = 2.59615 , )
+	Color_22 = pgl.Material("Color_22" , ambient = (68,59,25) , diffuse = 2.43737 , )
 	Color_22.name = "Color_22"
 	context.turtle.setMaterial(22,Color_22)
 	Color_23 = pgl.Material("Color_23" , ambient = (64,53,32) , diffuse = 2.52885 , )
