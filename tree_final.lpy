@@ -82,13 +82,13 @@ Leaf(s):
   elif 60 <= s <= 160:
     for e in range(len(endpoints) - 2):
       if endpoints[e] <= s < endpoints[e+1]:
-        produce ;(e+3)Sweep(nerve, section, length, dl, 0.5, x)
+        produce ;(e+1)Sweep(nerve, section, length, dl, 0.5, x)
   elif 160 < s <= 165:
-    produce ;(22)Sweep(nerve, section, length, dl, 0.2, x)
+    produce ;(22)Sweep(nerve, section, length, dl, 0.5, x)
   elif 165 < s <= 170:
-    produce ;(23)Sweep(nerve, section, length, dl, 0.5, x)
+    produce ;(23)Sweep(nerve, section, length, dl, 0.3, x)
   elif 170 < s <= 175:
-    produce ;(24)Sweep(nerve, section, length, dl, 0.8, x)
+    produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
   elif s >= 350:
     produce ;(41)@O(s / 4000)
   else:
