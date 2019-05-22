@@ -2,7 +2,7 @@
 # 
 # 
 
-import random
+import random as rd
 
 # Not sure, what is that exactly tbh
 phi = 90
@@ -15,7 +15,7 @@ step = 0.1
 
 # From Palubicki's example - length is an argument in Sweep function, as well as dl
 length = 1
-dl = 0.1
+dl = 0.05
 
 # self-explanatory. We can even improve the proccess of growth of the trunk to make it more natural!
 maximum_trunk_height = 3
@@ -30,8 +30,21 @@ def End():
     for string in strings:
         print >> file_handler, string
 
+def outer_branch_length():
+  return rd.uniform(1.2, 1.5)
+def random_alpha():
+  return rd.randint(35, 45)
+def random_beta():
+  return rd.randint(15, 35)
+def random_leaf_angle():
+  return rd.randint(-125,-125)
+def random_leaf_pitch():
+  return rd.randint(250,250)
+def random_age():
+  return rd.randint(-60, -1)
+
 # We start with 0.3 thickness and A (1.0)
-Axiom: _(0.3)A(1)
+Axiom: _(0.3) T(0) A(1)
 
 # 360 was chosen by trial and errors method, not making much sense I guess
 derivation length: 600
@@ -44,14 +57,14 @@ A(k) :
     #r = random.random()
     
     # After reaching 11 steps, don't grow tree further! From now, we are just aging the leaves (probably good thinking?)
-    if k <= 10:
+    if k <= 11:
       # If we haven't reached the maximum trunk height, we aren't producing any branches!
       if k <= maximum_trunk_height:
-          produce SetColor(0)F(k+1)A(k+1)
+          produce SetColor(0)F(0.01)A(k+1)
       else: # elif r <= p1:
-          produce /(phi)[+(alpha)C(0.1,k)Leaf(k)]-(beta)C(step,k)
+          produce /(phi)[+(random_alpha())C(0.1,k)Leaf(0)]-(random_beta())C(step,k)
       #else:
-      #    produce /(phi)[+(alpha)C(0.1, k);k(k)]-(beta)C(0.1,k)
+      #    produce /(phi)[+(random_alpha())C(0.1, k);k(k)]-(random_beta())C(0.1,k)
     else:
       # Just a dummy production to make sure that simulation doesn't stop, when nothing happens. Not sure, if it's needed - sometimes leaves didn't age properly without it, or maybe there was 
       # another mistake?
@@ -60,10 +73,11 @@ A(k) :
 # Whole module from random-tree. It produces some kind of branch with random thickness (?) and based on the iteration chooses whether it should produce more branches (A module?) or not.
 C(x,k) :
     if x >= 1:
-        if k < 19:
+        if k <= 10:
             produce F(1,0.05+0.25/k)A(k+1)
-        else:
-            produce F(1,0.05+0.25/k)
+        else: # outer branch divided in 4 parts
+            produce F(outer_branch_length()/4,0.04+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(random_age())]F(outer_branch_length()/4,0.03+0.20/k)[-(random_leaf_angle())?(random_leaf_pitch())Leaf(random_age())]F(outer_branch_length()/4,0.02+0.15/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(random_age())]F(outer_branch_length()/4,0.01+0.10/k)[-(random_leaf_angle())?(random_leaf_pitch())Leaf(random_age())]
+            
     else:
         produce C(x+step,k)
 
@@ -71,7 +85,7 @@ C(x,k) :
 Leaf(s):
   if (s == 175):
     # This adds some randomness to disappearing of leafs
-    rnd = random.random()
+    rnd = rd.random()
     if (rnd < 0.4):
       produce Leaf(s+1)
     else:
@@ -79,6 +93,12 @@ Leaf(s):
   else:
     produce Leaf(s+1)
 
+# Trunk
+T(t):
+  if (t < maximum_trunk_height):
+    produce SetColor(0) F(0.1) T(t+0.042)
+  else:
+    produce T(t)
 homomorphism:
 
 # Not sure what is that lol, probably randomizing the diameter of branch or something like this
@@ -94,22 +114,25 @@ C(x,k):
 Leaf(s):
   # Lol, it seems like list comprehensio  n doesn't work here
   endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
-  if s < 60:
-    produce ;(1)Sweep(nerve, section, length, dl, 0.5, x)
+  if s < 0:
+    produce
+  elif 0 <= s < 60:
+    produce ;(1)Sweep(path, section_2, (s*1.0)/60, dl, (s *1.0)/100, leafwidth)
   elif 60 <= s <= 160:
     for e in range(len(endpoints) - 2):
       if endpoints[e] <= s < endpoints[e+1]:
-        produce ;(e+2)Sweep(nerve, section, length, dl, 0.5, x)
+        produce ;(e+2)Sweep(path, section_2, length, dl, 0.6, leafwidth)
   elif 160 < s <= 165:
-    produce ;(22)Sweep(nerve, section, length, dl, 0.5, x)
+    produce ;(22)Sweep(path, section_2, length, dl, 0.5, leafwidth)
   elif 165 < s <= 170:
-    produce ;(23)Sweep(nerve, section, length, dl, 0.3, x)
+    produce ;(23)Sweep(path, section_2, length, dl, 0.3, leafwidth)
   elif 170 < s <= 175:
-    produce ;(24)Sweep(nerve, section, length, dl, 0.2, x)
+    produce ;(24)Sweep(path, section_2, length, dl, 0.2, leafwidth)
   elif s >= 350:
     produce ;(41)@O(s / (4000 * 1.0))
   else:
     produce
+
 
 endlsystem
 ###### INITIALISATION ######
@@ -216,11 +239,26 @@ def __initialiseContext__(context):
 	    ctrlPointList = pgl.Point3Array([(1.70909, -0.313636, 1),(-1.11667, 0.395454, 1),(0.30303, 0.940909, 1),(0.813636, 0.168182, 1)]) , 
 	    )
 	section.name = "section"
-	panel_0 = ({'active': True, 'visible': True, 'name': 'Panel 1'},[('Function',x),('Curve2D',nerve),('Curve2D',section)])
+	leafwidth = pgl.NurbsCurve2D(	
+	    ctrlPointList = pgl.Point3Array([(0, 0.0235343, 1),(0.259933, -0.0462347, 1),(0.259933, 0.90062, 1),(0.287462, 0.712806, 1),(0.324502, 1.04315, 1),(0.372678, 0.795394, 1),(0.37956, 1.21521, 1),(0.455265, 0.926157, 1),(0.462148, 1.24962, 1),(0.558499, 0.891745, 1),(0.558499, 1.21521, 1),(0.618412, 0.863182, 1),(0.627322, 1.11886, 1),(0.689262, 0.81604, 1),(0.689262, 0.96745, 1),(0.709909, 0.69216, 1),(0.74432, 0.809158, 1),(0.764967, 0.582043, 1),(0.764967, 0.705924, 1),(0.806261, 0.471927, 1),(0.847554, 0.478809, 1),(0.847554, 0.375576, 1),(0.886821, 0.33416, 1),(0.902612, 0.169108, 1),(0.916377, 0.224166, 1),(1, 0.0137645, 1)]) , 
+	    )
+	leafwidth.name = "leafwidth"
+	section_2 = pgl.NurbsCurve2D(	
+	    ctrlPointList = pgl.Point3Array([(-0.503574, 0.082053, 1),(-0.172505, -0.105009, 1),(0.00540459, 0.185936, 1),(0.182474, -0.116487, 1),(0.572084, 0.0925785, 1)]) , 
+	    )
+	section_2.name = "section_2"
+	path = pgl.NurbsCurve2D(	
+	    ctrlPointList = pgl.Point3Array([(-0.5, 0, 1),(-0.0761548, 0.0847519, 1),(0.0920954, -0.127235, 1),(0.5, 0, 1)]) , 
+	    )
+	path.name = "path"
+	panel_0 = ({'active': True, 'visible': True, 'name': 'Panel 1'},[('Function',x),('Curve2D',nerve),('Curve2D',section),('Function',leafwidth),('Curve2D',section_2),('Curve2D',path)])
 	parameterset = [panel_0,]
-	context["__functions__"] = [('x',x),]
-	context["__curves__"] = [('nerve',nerve),('section',section),]
+	context["__functions__"] = [('x',x),('leafwidth',leafwidth),]
+	context["__curves__"] = [('nerve',nerve),('section',section),('section_2',section_2),('path',path),]
 	context["__parameterset__"] = parameterset
 	context["x"] = pgl.QuantisedFunction(x)
 	context["nerve"] = nerve
 	context["section"] = section
+	context["leafwidth"] = pgl.QuantisedFunction(leafwidth)
+	context["section_2"] = section_2
+	context["path"] = path
