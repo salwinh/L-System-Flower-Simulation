@@ -50,7 +50,7 @@ A(k) :
     if k <= 11:
       # If we haven't reached the maximum trunk height, we aren't producing any branches!
       if k <= maximum_trunk_height:
-          produce SetColor(0)F(k+1)A(k+1)
+          produce SetColor(0)F(0.4)A(k+0.1)
       else: # elif r <= p1:
           produce /(phi)[+(random_alpha())C(0.1,k)Leaf(0)]-(random_beta())C(step,k)
       #else:
