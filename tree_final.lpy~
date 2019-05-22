@@ -34,7 +34,7 @@ def random_age():
   return rd.randint(-60, -1)
 
 # We start with 0.3 thickness and A (1.0)
-Axiom: _(0.3)A(1.0)
+Axiom: _(0.3) T(0) A(1.0)
 
 # 360 was chosen by trial and errors method, not making much sense I guess
 derivation length: 600
@@ -49,9 +49,6 @@ A(k) :
     # After reaching 11 steps, don't grow tree further! From now, we are just aging the leaves (probably good thinking?)
     if k <= 11:
       # If we haven't reached the maximum trunk height, we aren't producing any branches!
-      if k <= maximum_trunk_height:
-          produce SetColor(0)F(k+1)A(k+1)
-      else: # elif r <= p1:
           produce /(phi)[+(random_alpha())C(0.1,k)Leaf(0)]-(random_beta())C(step,k)
       #else:
       #    produce /(phi)[+(random_alpha())C(0.1, k);k(k)]-(random_beta())C(0.1,k)
@@ -83,6 +80,12 @@ Leaf(s):
   else:
     produce Leaf(s+1)
 
+# Trunk
+T(t):
+  if (t < maximum_trunk_height):
+    produce F(0.2) T(t+0.2)
+  else:
+    produce T(t)
 homomorphism:
 
 # Not sure what is that lol, probably randomizing the diameter of branch or something like this
@@ -116,6 +119,7 @@ Leaf(s):
     produce ;(41)@O((s*1.0) /4000)
   else:
     produce
+
 
 endlsystem
 ###### INITIALISATION ######
