@@ -61,6 +61,7 @@ def leaves_over_time(data):
     ax.plot(iterations, green, linestyle='dashed', color='green', label='green leaves')
     ax.legend(loc='upper left')
 
+
 def leaves_by_colors(string):
     red = get_number_of_color(string, 110, 134)
     yellow = get_number_of_color(string, 85, 109) + get_number_of_color(string, 135, 150)
@@ -77,7 +78,7 @@ def get_number_of_color(string, endpoint1, endpoint2):
 
 data = np.loadtxt('data.txt', dtype=str)
 
-#leaves_color_distribution(data)
+leaves_color_distribution(data)
 leaves_over_time(data)
 
 plt.show()
