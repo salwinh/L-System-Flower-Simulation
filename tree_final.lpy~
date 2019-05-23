@@ -1,24 +1,26 @@
-# THIS CODE IS A REAL MESS!! SORRY HUBI & KUBA.
-# 
-# 
-
 import random as rd
 
-# Not sure, what is that exactly tbh
 phi = 90
-# Those are the angles between two 'sides' of branches
 alpha = 30
 beta  = 20
-# Step per iteration, we can consider this as a unit of the time
+
 step = 0.1
-#stepleaf = 0.02 # not used right now, but could be useful
+leaf_step = 1
 
-# From Palubicki's example - length is an argument in Sweep function, as well as dl
 length = 1
-dl = 0.05
+dl = 0.25 # default 0.05
 
-# self-explanatory. We can even improve the proccess of growth of the trunk to make it more natural!
 maximum_trunk_height = 3
+
+strings = []
+
+def EndEach(current_string):
+  strings.append(str(current_string))
+  
+def End():
+  with open('data.txt', 'w+') as file_handler:
+    for string in strings:
+        print >> file_handler, string
 
 def outer_branch_length():
   return rd.uniform(1.2, 1.5)
@@ -33,62 +35,48 @@ def random_leaf_pitch():
 def random_age():
   return rd.randint(-60, -1)
 
-# We start with 0.3 thickness and A (1.0)
-Axiom: _(0.3) T(0) A(1.0)
+Axiom: _(0.3) T(0) A(1)
 
-# 360 was chosen by trial and errors method, not making much sense I guess
 derivation length: 600
 production:
-A(k) :
-    # pl - Probably some kind of probability. Check out random-tree example from examples/tutorials, l-py directory. I removed the random factor to make tree more symmetric.
-    # Commented out lines are also from that example, just compare them
-    
-    #p1 = min(1,(2*k+1)/k**2)
-    #r = random.random()
-    
-    # After reaching 11 steps, don't grow tree further! From now, we are just aging the leaves (probably good thinking?)
-    if k <= 11:
-      # If we haven't reached the maximum trunk height, we aren't producing any branches!
+A(k):
+    # After reaching 10 steps, stop tree growth
+    if k <= 10:
+      # If we haven't reached the maximum trunk height, we aren't producing any branches
+      if k <= maximum_trunk_height:
+          produce SetColor(0)F(0.01)A(k+1)
+      else:
           produce /(phi)[+(random_alpha())C(0.1,k)Leaf(0)]-(random_beta())C(step,k)
-      #else:
-      #    produce /(phi)[+(random_alpha())C(0.1, k);k(k)]-(random_beta())C(0.1,k)
-    else:
-      # Just a dummy production to make sure that simulation doesn't stop, when nothing happens. Not sure, if it's needed - sometimes leaves didn't age properly without it, or maybe there was 
-      # another mistake?
-      produce f(0.01)
 
-# Whole module from random-tree. It produces some kind of branch with random thickness (?) and based on the iteration chooses whether it should produce more branches (A module?) or not.
 C(x,k) :
     if x >= 1:
-        if k <= 10:
+        if k <= 9:
             produce F(1,0.05+0.25/k)A(k+1)
         else: # outer branch divided in 4 parts
-            produce F(outer_branch_length()/4,0.04+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(random_age())]F(outer_branch_length()/4,0.03+0.20/k)[-(random_leaf_angle())?(random_leaf_pitch())Leaf(random_age())]F(outer_branch_length()/4,0.02+0.15/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(random_age())]F(outer_branch_length()/4,0.01+0.10/k)[-(random_leaf_angle())?(random_leaf_pitch())Leaf(random_age())]
+            produce F(outer_branch_length()/3,0.04+0.25/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(random_age())]F(outer_branch_length()/3,0.02+0.15/k)[-(random_leaf_angle())?(random_leaf_pitch())Leaf(random_age())]F(outer_branch_length()/3,0.01+0.05/k)[+(random_leaf_angle())&(random_leaf_angle())Leaf(random_age())]
             
     else:
         produce C(x+step,k)
 
-# Basically what it says is that in every step we age leaf by 0.5, maybe we can play with this factor
 Leaf(s):
   if (s == 175):
     # This adds some randomness to disappearing of leafs
     rnd = rd.random()
     if (rnd < 0.4):
-      produce Leaf(s+1)
+      produce Leaf(s+leaf_step)
     else:
       produce Leaf(175)
   else:
-    produce Leaf(s+1)
+    produce Leaf(s+leaf_step)
 
 # Trunk
 T(t):
   if (t < maximum_trunk_height):
-    produce F(0.2) T(t+0.2)
+    produce SetColor(0) F(0.1) T(t+0.042)
   else:
     produce T(t)
 homomorphism:
 
-# Not sure what is that lol, probably randomizing the diameter of branch or something like this
 C(x,k):
     d = 1
     if k > 1:
@@ -97,9 +85,7 @@ C(x,k):
         d = (0.3*(1-x))+((0.05+0.25/k)*x)
     produce F(x, d)
 
-# This is how the leaves are interpreted!
 Leaf(s):
-  # Lol, it seems like list comprehension doesn't work here
   endpoints = [60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 130, 135, 140, 145, 150, 155, 160, 165, 170, 175]
   if s < 0:
     produce
@@ -108,7 +94,7 @@ Leaf(s):
   elif 60 <= s <= 160:
     for e in range(len(endpoints) - 2):
       if endpoints[e] <= s < endpoints[e+1]:
-        produce ;(e+1)Sweep(path, section_2, length, dl, 0.6, leafwidth)
+        produce ;(e+2)Sweep(path, section_2, length, dl, 0.6, leafwidth)
   elif 160 < s <= 165:
     produce ;(22)Sweep(path, section_2, length, dl, 0.5, leafwidth)
   elif 165 < s <= 170:
@@ -116,11 +102,9 @@ Leaf(s):
   elif 170 < s <= 175:
     produce ;(24)Sweep(path, section_2, length, dl, 0.2, leafwidth)
   elif s >= 350:
-    produce ;(41)@O((s*1.0) /4000)
+    produce ;(41)@O(s / (4000 * 1.0))
   else:
     produce
-
-
 endlsystem
 ###### INITIALISATION ######
 
@@ -212,6 +196,7 @@ def __initialiseContext__(context):
 	Color_42 = pgl.Material("Color_42" , ambient = (30,60,10) , diffuse = 3 , )
 	Color_42.name = "Color_42"
 	context.turtle.setMaterial(42,Color_42)
+	context.options.setSelection('Optimization',2)
 	import openalea.plantgl.all as pgl
 	x = pgl.NurbsCurve2D(	
 	    ctrlPointList = pgl.Point3Array([(0, 0.0551126, 1),(0.389171, 1.43562, 1),(0.666667, 0, 1),(1, 0.130266, 1)]) , 
