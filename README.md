@@ -1,5 +1,5 @@
 # L-System-Tree-Simulation
-Tree growth simulation throughout the seasons in Python framework L-Py, created for **Python for Engineering** classes at Adam Mickiewicz's University.
+Tree growth simulation throughout the seasons of the year in Python framework L-Py, created for **Python for Engineering** classes at Adam Mickiewicz's University.
 #
 ## Simulation
 Simulation code is contained in `tree_final.lpy` file. It should be executed in **L-Py Studio**.
