@@ -9,7 +9,7 @@ File `stats.py` includes statistics module. Notice that the module's code is wri
 
 **IMPORTANT!!**
 
-Before executing the statistics script, make sure that the whole simulation is finished (or just simply press `Execute` inside L-Py studio), as it depends heavily on data, which is collected throughout the simulation and is written to the file at the end.
+Before executing the statistics script, make sure that the whole simulation is finished (or just simply press `Execute` inside L-Py studio), as it depends heavily on data, which is collected throughout the simulation and is written to the file in the end.
 #
 ## Authors
 The project was created thanks to successful cooperation of:
